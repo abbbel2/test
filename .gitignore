@@ -1,0 +1,13 @@
+.vercel
+.next
+
+.DS_Store
+
+.vscode
+
+node_modules
+.idea/*
+*.log
+migration/
+dist/
+coverage
