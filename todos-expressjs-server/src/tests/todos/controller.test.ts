@@ -1,3 +1,4 @@
+import { uuid } from 'uuidv4';
 import { todosController } from '../../modules/todos/controllers';
 
 describe('TodoController Class Testing', () => {
@@ -14,6 +15,14 @@ describe('TodoController Class Testing', () => {
       completed: false,
     };
     const createdTodo = todosController.create(todo);
+
+    expect(createdTodo.error).toBe(null);
+    expect(createdTodo.data).toBeDefined();
+  });
+
+  test('Order Todo', async () => {
+    const todo = {ids: [uuid()]};
+    const createdTodo = todosController.orderTodos(todo);
 
     expect(createdTodo.error).toBe(null);
     expect(createdTodo.data).toBeDefined();
@@ -53,4 +62,5 @@ describe('TodoController Class Testing', () => {
       todosController.todosDal.getOne(createdTodo.data._id),
     ).toBeUndefined();
   });
+  
 });

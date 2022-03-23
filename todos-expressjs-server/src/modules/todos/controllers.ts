@@ -4,8 +4,8 @@ import {
   newControllerError,
 } from '../../utils/controller-result.model';
 import { todosDal, TodosDal } from './dal';
-import { ITodoPayload, Todo } from './model';
-import { validateTodoCreatePayload } from './validator';
+import { ITodoOrderPayload, ITodoPayload, Todo } from './model';
+import { validateTodoCreatePayload, validateTodoEditPayload, validateTodoOrderPayload } from './validator';
 
 export class TodosController {
   todosDal: TodosDal;
@@ -24,17 +24,34 @@ export class TodosController {
 
   //TODO: Implement get all
   getAll(): IControllerResult<Todo[]> {
-    return null;
+    return newControllerData(this.todosDal.getAll());
   }
 
   //TODO: Implement update
   update(payload: ITodoPayload, id: string): IControllerResult<Todo> {
-    return null;
+    const {error, value} = validateTodoEditPayload(payload);
+    if (error) {
+      return newControllerError(error.details[0].message, 400);
+    }
+    console.log(newControllerData(this.todosDal.edit(value, id)));
+    return newControllerData(this.todosDal.edit(value, id));
   }
 
   //TODO: Implement delete
   delete(id: string): IControllerResult<String> {
-    return null;
+    const {error, data} = newControllerData(this.todosDal.delete(id));
+    if (error) return newControllerError(error.errorMessage);
+    return newControllerData("deleted");
+  }
+
+  orderTodos(orderArray: ITodoOrderPayload): IControllerResult<Todo[]> {
+    console.log(orderArray)
+    const { error, value } = validateTodoOrderPayload(orderArray);
+    if (error) {
+      return newControllerError(error.details[0].message, 400);
+    }
+
+    return newControllerData(this.todosDal.changeOrder(value));
   }
 }
 

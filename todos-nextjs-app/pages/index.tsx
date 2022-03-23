@@ -57,6 +57,13 @@ function Homepage(): JSX.Element {
     const [reorderedItem] = items.splice(result.source.index, 1)
     items.splice(result.destination.index, 0, reorderedItem)
 
+    axios
+      .put('/api/todos/order', { ids: items.map((item: any) => item?._id) })
+      .then((res) => {
+        setAllTodos(res.data)
+      })
+      .catch((err) => console.log(err))
+
     setTodos(items)
   }
 

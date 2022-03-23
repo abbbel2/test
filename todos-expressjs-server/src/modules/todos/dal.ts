@@ -1,5 +1,5 @@
 import { todosArray } from '../../config/db';
-import { ITodoPayload, Todo } from './model';
+import { ITodoOrderPayload, ITodoPayload, Todo } from './model';
 import { uuid } from 'uuidv4';
 import _ from 'lodash';
 
@@ -42,6 +42,15 @@ export class TodosDal {
 
   delete(id: string) {
     _.remove(this.todosArray, { _id: id });
+  }
+
+  changeOrder(orderArray: ITodoOrderPayload):Todo[]  {
+    const newTodo: Todo[] = orderArray.ids.map((order) => {
+      const item = this.todosArray.find((todo) => todo._id === order);
+      return item;
+    });
+    return newTodo;
+
   }
 }
 

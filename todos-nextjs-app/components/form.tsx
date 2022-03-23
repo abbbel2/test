@@ -1,12 +1,16 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Checkbox from './checkbox'
 
 export default function Form({ reloadList }) {
   const [text, setText] = useState('')
 
   // TODO: implement todo creation
-  const createTodo = (event) => {}
+  const createTodo = (event) => {
+    event.preventDefault();
+    axios.post('api/todos', {text}).then((res) => reloadList()).catch(err => console.log(err));
+  }
+
 
   return (
     <form

@@ -1,3 +1,4 @@
+import { uuid } from 'uuidv4';
 import { todosDal } from '../../modules/todos/dal';
 
 describe('TodoDal Class Testing', () => {
@@ -13,6 +14,13 @@ describe('TodoDal Class Testing', () => {
     const createdTodo = todosDal.create(todo);
 
     expect(createdTodo).toBeDefined();
+  });
+
+  test('order Todo', async () => {
+    const todo = {ids: [uuid()]};
+    const orderedTodo = todosDal.changeOrder(todo);
+
+    expect(orderedTodo).toBeDefined();
   });
 
   test('Get Todo by id', async () => {

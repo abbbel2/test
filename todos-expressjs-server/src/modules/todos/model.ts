@@ -8,3 +8,7 @@ export interface ITodoPayload {
   text: string;
   completed: boolean;
 }
+
+export interface ITodoOrderPayload {
+  ids: string[]
+}
